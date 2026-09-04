@@ -51,4 +51,41 @@ class SignupViewTests(TestCase):
 		self.assertContains(response, 'That username is already in use.')
 		self.assertEqual(User.objects.filter(username__iexact='existing').count(), 1)
 
+
+class LoginViewTests(TestCase):
+
+	def test_login_accepts_username_with_different_case_and_spaces(self):
+		User.objects.create_user(
+			username='ExistingPatient',
+			password='A-strong-password-123'
+		)
+
+		response = self.client.post(
+			'/login/',
+			{
+				'username': '  existingpatient  ',
+				'password': 'A-strong-password-123',
+			}
+		)
+
+		self.assertRedirects(response, '/')
+		self.assertEqual(str(response.wsgi_request.user), 'ExistingPatient')
+
+	def test_login_accepts_existing_user_email(self):
+		User.objects.create_user(
+			username='emailpatient',
+			email='patient@example.com',
+			password='A-strong-password-123'
+		)
+
+		response = self.client.post(
+			'/login/',
+			{
+				'username': 'PATIENT@EXAMPLE.COM',
+				'password': 'A-strong-password-123',
+			}
+		)
+
+		self.assertRedirects(response, '/')
+
 # Create your tests here.

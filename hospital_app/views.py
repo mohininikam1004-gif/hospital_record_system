@@ -92,14 +92,34 @@ def login_view(request):
 
     if request.method == 'POST':
 
-        username = request.POST.get('username')
+        username = request.POST.get('username', '').strip()
         password = request.POST.get('password')
 
-        user = authenticate(
-            request,
-            username=username,
-            password=password
+        matching_users = User.objects.filter(
+            username__iexact=username
         )
+
+        if not matching_users.exists() and '@' in username:
+            matching_users = User.objects.filter(
+                email__iexact=username
+            )
+
+        user = None
+        for matching_user in matching_users:
+            user = authenticate(
+                request,
+                username=matching_user.username,
+                password=password
+            )
+            if user is not None:
+                break
+
+        if user is None:
+            user = authenticate(
+                request,
+                username=username,
+                password=password
+            )
 
         if user is not None:
 
@@ -126,7 +146,8 @@ def login_view(request):
                 request,
                 'hospital_app/login.html',
                 {
-                    'error': 'Invalid username or password'
+                    'error': 'Invalid username or password',
+                    'username': username
                 }
             )
 
