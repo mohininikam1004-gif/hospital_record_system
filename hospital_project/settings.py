@@ -24,6 +24,11 @@ SECRET_KEY = 'django-insecure-d@dxh$0ume!#m4r6l23zn%1jq-mi&1fy_jk5_smflipg%42s'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+DEBUG = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://hospitalrecordsystem-production.up.railway.app',
+]
 
 
 # ============================================================
