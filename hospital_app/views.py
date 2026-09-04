@@ -316,7 +316,7 @@ def book_appointment(request):
         if not doctor_id:
             return render(
                 request,
-                'hospital_app/book_appointment.html',
+                'book_appointment.html',
                 {
                     'doctors': doctors,
                     'error': 'Please select a doctor.'
@@ -326,7 +326,7 @@ def book_appointment(request):
         if not appointment_date:
             return render(
                 request,
-                'hospital_app/book_appointment.html',
+                'book_appointment.html',
                 {
                     'doctors': doctors,
                     'error': 'Please select an appointment date.'
@@ -336,7 +336,7 @@ def book_appointment(request):
         if not appointment_time:
             return render(
                 request,
-                'hospital_app/book_appointment.html',
+                'book_appointment.html',
                 {
                     'doctors': doctors,
                     'error': 'Please select an appointment time.'
@@ -360,7 +360,7 @@ def book_appointment(request):
 
             return render(
                 request,
-                'hospital_app/book_appointment.html',
+                'book_appointment.html',
                 {
                     'doctors': doctors,
                     'error':
@@ -389,7 +389,7 @@ def book_appointment(request):
 
             return render(
                 request,
-                'hospital_app/book_appointment.html',
+                'book_appointment.html',
                 {
                     'doctors': doctors,
                     'error':
@@ -399,7 +399,7 @@ def book_appointment(request):
 
     return render(
         request,
-        'hospital_app/book_appointment.html',
+        'book_appointment.html',
         {
             'doctors': doctors
         }
@@ -421,7 +421,7 @@ def appointment_success(request, appointment_id):
 
     return render(
         request,
-        'hospital_app/appointment_success.html',
+        'appointment_success.html',
         {
             'appointment': appointment
         }
@@ -444,7 +444,7 @@ def my_appointments(request):
 
     return render(
         request,
-        'hospital_app/my_appointments.html',
+        'my_appointments.html',
         {
             'appointments': appointments
         }
