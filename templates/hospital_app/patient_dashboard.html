@@ -1,0 +1,38 @@
+{% extends 'hospital_app/base.html' %}
+
+{% block title %}Patient Dashboard | HospitalCare{% endblock %}
+
+{% block content %}
+<style>
+    .patient-dashboard { max-width: 1100px; margin: 0 auto; padding: 56px 24px; }
+    .patient-dashboard header { margin-bottom: 30px; }
+    .patient-dashboard h1 { margin-bottom: 8px; font-size: 34px; }
+    .patient-dashboard header p { color: #627d98; }
+    .dashboard-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .dashboard-action { padding: 26px; border: 1px solid #d9e6ed; border-radius: 16px; background: #ffffff; box-shadow: 0 10px 30px rgba(15, 42, 67, 0.08); }
+    .dashboard-action h2 { margin-bottom: 8px; font-size: 20px; }
+    .dashboard-action p { margin-bottom: 18px; color: #627d98; font-size: 14px; }
+    .dashboard-action a { display: inline-block; padding: 10px 16px; border-radius: 9px; background: #0f8fa8; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 700; }
+    @media (max-width: 650px) { .dashboard-actions { grid-template-columns: 1fr; } .patient-dashboard h1 { font-size: 28px; } }
+</style>
+
+<main class="patient-dashboard">
+    <header>
+        <h1>Welcome, {{ patient.user.first_name|default:patient.user.username }}</h1>
+        <p>Your patient account is ready. Manage your care from one place.</p>
+    </header>
+
+    <section class="dashboard-actions">
+        <article class="dashboard-action">
+            <h2>Book an appointment</h2>
+            <p>Find a doctor and choose a convenient appointment time.</p>
+            <a href="{% url 'book_appointment' %}">Book appointment</a>
+        </article>
+        <article class="dashboard-action">
+            <h2>My appointments</h2>
+            <p>Review your upcoming and previous appointments.</p>
+            <a href="{% url 'my_appointments' %}">View appointments</a>
+        </article>
+    </section>
+</main>
+{% endblock %}

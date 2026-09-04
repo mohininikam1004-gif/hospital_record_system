@@ -22,8 +22,7 @@ class SignupViewTests(TestCase):
 			}
 		)
 
-		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['Location'], '/dashboard/')
+		self.assertRedirects(response, '/dashboard/', fetch_redirect_response=True)
 		user = User.objects.get(username='newpatient')
 		self.assertTrue(user.check_password('A-strong-password-123'))
 		self.assertEqual(Profile.objects.get(user=user).role, 'Patient')
