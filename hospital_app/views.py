@@ -2,7 +2,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError, transaction
+from django.core.exceptions import ValidationError
 
 from .models import (
     Department,
@@ -130,6 +133,87 @@ def login_view(request):
     return render(
         request,
         'hospital_app/login.html'
+    )
+
+
+# =========================
+# SIGNUP
+# =========================
+
+def signup_view(request):
+
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
+    form_data = request.POST if request.method == 'POST' else {}
+    errors = []
+
+    if request.method == 'POST':
+
+        username = form_data.get('username', '').strip()
+        first_name = form_data.get('first_name', '').strip()
+        last_name = form_data.get('last_name', '').strip()
+        email = form_data.get('email', '').strip()
+        password = form_data.get('password', '')
+        password_confirmation = form_data.get('password_confirmation', '')
+        age_value = form_data.get('age', '').strip()
+        phone = form_data.get('phone', '').strip()
+        address = form_data.get('address', '').strip()
+
+        if User.objects.filter(username__iexact=username).exists():
+            errors.append('That username is already in use.')
+
+        if password != password_confirmation:
+            errors.append('The passwords do not match.')
+
+        try:
+            validate_password(password, user=User(username=username))
+        except ValidationError as validation_error:
+            errors.extend(validation_error.messages)
+
+        try:
+            age = int(age_value)
+            if age < 1 or age > 120:
+                raise ValueError
+        except (TypeError, ValueError):
+            errors.append('Enter an age between 1 and 120.')
+
+        if not phone:
+            errors.append('Enter a phone number.')
+
+        if not address:
+            errors.append('Enter your address.')
+
+        if not errors:
+            try:
+                with transaction.atomic():
+                    user = User.objects.create_user(
+                        username=username,
+                        first_name=first_name,
+                        last_name=last_name,
+                        email=email,
+                        password=password
+                    )
+                    Profile.objects.create(user=user, role='Patient')
+                    Patient.objects.create(
+                        user=user,
+                        age=age,
+                        phone=phone,
+                        address=address
+                    )
+            except IntegrityError:
+                errors.append('That username is already in use.')
+            else:
+                login(request, user)
+                return redirect('dashboard')
+
+    return render(
+        request,
+        'hospital_app/signup.html',
+        {
+            'errors': errors,
+            'form_data': form_data
+        }
     )
 
 
