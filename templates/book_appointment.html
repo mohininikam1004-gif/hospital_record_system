@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Appointment</title>
+</head>
+
+<body>
+{% if error %}
+
+<p style="color: red;">
+    {{ error }}
+</p>
+
+{% endif %}
+<h1>Book Doctor Appointment</h1>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <label>Doctor:</label>
+
+    <select name="doctor" required>
+
+        {% for doctor in doctors %}
+
+        <option value="{{ doctor.id }}">
+            Dr. {{ doctor.user.get_full_name }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label>Date:</label>
+
+    <input
+        type="date"
+        name="appointment_date"
+        required
+    >
+
+    <br><br>
+
+    <label>Time:</label>
+
+    <select name="appointment_time" required>
+
+        <option value="09:00">09:00 AM</option>
+        <option value="10:00">10:00 AM</option>
+        <option value="11:00">11:00 AM</option>
+        <option value="12:00">12:00 PM</option>
+        <option value="14:00">02:00 PM</option>
+        <option value="15:00">03:00 PM</option>
+        <option value="16:00">04:00 PM</option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Book Appointment
+    </button>
+
+</form>
+
+</body>
+
+</html>

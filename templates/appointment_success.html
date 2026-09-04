@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Appointment Confirmed</title>
+</head>
+
+<body>
+
+<h1>Appointment Booked Successfully!</h1>
+
+<p>
+    Appointment ID:
+    {{ appointment.id }}
+</p>
+
+<p>
+    Doctor:
+    Dr. {{ appointment.doctor.user.get_full_name }}
+</p>
+
+<p>
+    Date:
+    {{ appointment.appointment_date }}
+</p>
+
+<p>
+    Time:
+    {{ appointment.appointment_time }}
+</p>
+
+<p>
+    Status:
+    {{ appointment.status }}
+</p>
+
+<a href="/book-appointment/">
+    Book Another Appointment
+</a>
+
+</body>
+
+</html>

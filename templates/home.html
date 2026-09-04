@@ -1,0 +1,1375 @@
+
+{% extends 'hospital_app/base.html' %}
+
+{% block title %}
+    HospitalCare | Modern Healthcare Management
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    /* ========================================
+       HOME PAGE
+    ======================================== */
+
+    .home-page {
+        width: 100%;
+    }
+
+
+    /* ========================================
+       HERO
+    ======================================== */
+
+    .hero-section {
+
+        position: relative;
+
+        display: grid;
+
+        grid-template-columns: 1.15fr 0.85fr;
+
+        align-items: center;
+
+        gap: 60px;
+
+        min-height: 500px;
+
+        padding: 55px;
+
+        overflow: hidden;
+
+        border-radius: 28px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #073b4c 0%,
+                #087e8b 48%,
+                #0f9b8e 100%
+            );
+
+        box-shadow:
+            0 25px 60px rgba(7, 59, 76, 0.20);
+
+        color: white;
+    }
+
+
+    .hero-section::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 380px;
+
+        height: 380px;
+
+        right: -140px;
+
+        top: -160px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255, 255, 255, 0.08);
+    }
+
+
+    .hero-section::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 250px;
+
+        height: 250px;
+
+        left: 42%;
+
+        bottom: -170px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255, 255, 255, 0.06);
+    }
+
+
+    .hero-content {
+
+        position: relative;
+
+        z-index: 2;
+    }
+
+
+    .hero-badge {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        margin-bottom: 22px;
+
+        padding:
+            8px 14px;
+
+        border:
+            1px solid rgba(255,255,255,0.20);
+
+        border-radius: 30px;
+
+        background:
+            rgba(255,255,255,0.10);
+
+        color:
+            rgba(255,255,255,0.90);
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        letter-spacing: 1px;
+
+        text-transform: uppercase;
+
+        backdrop-filter:
+            blur(10px);
+    }
+
+
+    .hero-badge-dot {
+
+        width: 7px;
+
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: #5eead4;
+
+        box-shadow:
+            0 0 0 5px rgba(94,234,212,0.12);
+    }
+
+
+    .hero-title {
+
+        max-width: 650px;
+
+        margin: 0 0 22px;
+
+        color: white;
+
+        font-size: clamp(38px, 5vw, 62px);
+
+        font-weight: 800;
+
+        line-height: 1.06;
+
+        letter-spacing: -2px;
+    }
+
+
+    .hero-title span {
+
+        color: #72e4d4;
+    }
+
+
+    .hero-description {
+
+        max-width: 570px;
+
+        margin-bottom: 32px;
+
+        color:
+            rgba(255,255,255,0.78);
+
+        font-size: 16px;
+
+        line-height: 1.75;
+    }
+
+
+    .hero-actions {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .hero-primary-btn {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 52px;
+
+        padding:
+            0 22px;
+
+        border-radius: 12px;
+
+        text-decoration: none;
+
+        color: #064e5a;
+
+        background: white;
+
+        font-size: 14px;
+
+        font-weight: 750;
+
+        box-shadow:
+            0 12px 25px rgba(0,0,0,0.12);
+
+        transition:
+            all 0.25s ease;
+    }
+
+
+    .hero-primary-btn:hover {
+
+        transform:
+            translateY(-3px);
+
+        color: #064e5a;
+
+        box-shadow:
+            0 17px 30px rgba(0,0,0,0.18);
+    }
+
+
+    .hero-secondary-btn {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 52px;
+
+        padding:
+            0 22px;
+
+        border:
+            1px solid rgba(255,255,255,0.22);
+
+        border-radius: 12px;
+
+        text-decoration: none;
+
+        color: white;
+
+        background:
+            rgba(255,255,255,0.08);
+
+        font-size: 14px;
+
+        font-weight: 650;
+
+        backdrop-filter:
+            blur(10px);
+
+        transition:
+            all 0.25s ease;
+    }
+
+
+    .hero-secondary-btn:hover {
+
+        color: white;
+
+        background:
+            rgba(255,255,255,0.15);
+
+        transform:
+            translateY(-3px);
+    }
+
+
+    /* ========================================
+       HERO VISUAL
+    ======================================== */
+
+    .hero-visual {
+
+        position: relative;
+
+        z-index: 2;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 360px;
+    }
+
+
+    .medical-orb {
+
+        position: relative;
+
+        width: 280px;
+
+        height: 280px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255,255,255,0.10);
+
+        border:
+            1px solid rgba(255,255,255,0.16);
+
+        box-shadow:
+            inset 0 0 60px rgba(255,255,255,0.05),
+            0 25px 60px rgba(0,0,0,0.12);
+
+        backdrop-filter:
+            blur(12px);
+    }
+
+
+    .medical-orb-inner {
+
+        width: 190px;
+
+        height: 190px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255,255,255,0.12);
+
+        border:
+            1px solid rgba(255,255,255,0.15);
+
+        font-size: 92px;
+
+        box-shadow:
+            0 20px 40px rgba(0,0,0,0.10);
+    }
+
+
+    .floating-card {
+
+        position: absolute;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        padding:
+            12px 15px;
+
+        border:
+            1px solid rgba(255,255,255,0.18);
+
+        border-radius: 13px;
+
+        background:
+            rgba(255,255,255,0.12);
+
+        color: white;
+
+        font-size: 12px;
+
+        font-weight: 650;
+
+        backdrop-filter:
+            blur(15px);
+
+        box-shadow:
+            0 15px 30px rgba(0,0,0,0.12);
+    }
+
+
+    .floating-card.top {
+
+        top: 25px;
+
+        right: 5px;
+    }
+
+
+    .floating-card.bottom {
+
+        bottom: 25px;
+
+        left: 0;
+    }
+
+
+    .floating-icon {
+
+        width: 30px;
+
+        height: 30px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background:
+            rgba(255,255,255,0.15);
+
+        font-size: 15px;
+    }
+
+
+    /* ========================================
+       QUICK STATS
+    ======================================== */
+
+    .stats-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 16px;
+
+        margin-top: 22px;
+    }
+
+
+    .stat-card {
+
+        padding: 22px;
+
+        border:
+            1px solid #e0ebf1;
+
+        border-radius: 17px;
+
+        background: white;
+
+        box-shadow:
+            var(--shadow-sm);
+
+        transition:
+            all 0.25s ease;
+    }
+
+
+    .stat-card:hover {
+
+        transform:
+            translateY(-4px);
+
+        box-shadow:
+            var(--shadow-md);
+    }
+
+
+    .stat-icon {
+
+        width: 42px;
+
+        height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        margin-bottom: 15px;
+
+        border-radius: 11px;
+
+        background:
+            #e9f8fa;
+
+        font-size: 19px;
+    }
+
+
+    .stat-number {
+
+        color: var(--dark);
+
+        font-size: 21px;
+
+        font-weight: 800;
+    }
+
+
+    .stat-label {
+
+        margin-top: 2px;
+
+        color: var(--muted);
+
+        font-size: 12px;
+
+        font-weight: 500;
+    }
+
+
+    /* ========================================
+       SECTION HEADER
+    ======================================== */
+
+    .section-header {
+
+        margin-top: 65px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .section-label {
+
+        display: block;
+
+        margin-bottom: 7px;
+
+        color: var(--primary);
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+
+        text-transform: uppercase;
+    }
+
+
+    .section-title {
+
+        margin: 0;
+
+        font-size: 30px;
+
+        font-weight: 800;
+    }
+
+
+    .section-description {
+
+        max-width: 600px;
+
+        margin-top: 8px;
+
+        color: var(--muted);
+
+        font-size: 14px;
+    }
+
+
+    /* ========================================
+       SERVICE CARDS
+    ======================================== */
+
+    .service-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 20px;
+    }
+
+
+    .service-card {
+
+        position: relative;
+
+        padding: 28px;
+
+        overflow: hidden;
+
+        border:
+            1px solid #e0ebf1;
+
+        border-radius: 19px;
+
+        background: white;
+
+        box-shadow:
+            var(--shadow-sm);
+
+        transition:
+            all 0.3s ease;
+    }
+
+
+    .service-card::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 100px;
+
+        height: 100px;
+
+        right: -50px;
+
+        bottom: -50px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(15,143,168,0.05);
+
+        transition:
+            transform 0.3s ease;
+    }
+
+
+    .service-card:hover {
+
+        transform:
+            translateY(-7px);
+
+        border-color:
+            #c6e5eb;
+
+        box-shadow:
+            var(--shadow-md);
+    }
+
+
+    .service-card:hover::after {
+
+        transform:
+            scale(2);
+    }
+
+
+    .service-icon {
+
+        width: 55px;
+
+        height: 55px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        margin-bottom: 20px;
+
+        border-radius: 14px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #e5f8fb,
+                #e8f7f4
+            );
+
+        font-size: 25px;
+    }
+
+
+    .service-card h3 {
+
+        margin-bottom: 9px;
+
+        font-size: 18px;
+
+        font-weight: 750;
+    }
+
+
+    .service-card p {
+
+        min-height: 48px;
+
+        margin-bottom: 20px;
+
+        color: var(--muted);
+
+        font-size: 13px;
+
+        line-height: 1.65;
+    }
+
+
+    .service-link {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        text-decoration: none;
+
+        color: var(--primary);
+
+        font-size: 13px;
+
+        font-weight: 750;
+
+        transition:
+            gap 0.2s ease;
+    }
+
+
+    .service-link:hover {
+
+        color: var(--primary-dark);
+
+        gap: 10px;
+    }
+
+
+    /* ========================================
+       APPOINTMENT CTA
+    ======================================== */
+
+    .appointment-banner {
+
+        position: relative;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 30px;
+
+        margin-top: 65px;
+
+        padding:
+            38px 42px;
+
+        overflow: hidden;
+
+        border-radius: 21px;
+
+        background:
+            linear-gradient(
+                120deg,
+                #e9f8fa,
+                #effaf7
+            );
+
+        border:
+            1px solid #d4ecee;
+    }
+
+
+    .appointment-banner::after {
+
+        content: "✚";
+
+        position: absolute;
+
+        right: 45px;
+
+        top: -30px;
+
+        color:
+            rgba(15,143,168,0.08);
+
+        font-size: 170px;
+
+        font-weight: 900;
+    }
+
+
+    .appointment-content {
+
+        position: relative;
+
+        z-index: 2;
+    }
+
+
+    .appointment-content h2 {
+
+        margin-bottom: 7px;
+
+        font-size: 25px;
+    }
+
+
+    .appointment-content p {
+
+        color: var(--muted);
+
+        font-size: 13px;
+    }
+
+
+    .appointment-btn {
+
+        position: relative;
+
+        z-index: 3;
+
+        flex-shrink: 0;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 48px;
+
+        padding:
+            0 20px;
+
+        border-radius: 11px;
+
+        text-decoration: none;
+
+        color: white;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--primary),
+                var(--secondary)
+            );
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        box-shadow:
+            0 10px 22px rgba(15,143,168,0.20);
+
+        transition:
+            all 0.25s ease;
+    }
+
+
+    .appointment-btn:hover {
+
+        color: white;
+
+        transform:
+            translateY(-3px);
+
+        box-shadow:
+            0 15px 28px rgba(15,143,168,0.27);
+    }
+
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+
+    @media (max-width: 1000px) {
+
+        .hero-section {
+
+            grid-template-columns: 1fr;
+
+            gap: 25px;
+
+            padding: 45px;
+        }
+
+
+        .hero-visual {
+
+            display: none;
+        }
+
+
+        .stats-grid {
+
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+
+        .service-grid {
+
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .hero-section {
+
+            min-height: auto;
+
+            padding: 35px 25px;
+
+            border-radius: 20px;
+        }
+
+
+        .hero-title {
+
+            font-size: 39px;
+
+            letter-spacing: -1.5px;
+        }
+
+
+        .hero-description {
+
+            font-size: 14px;
+        }
+
+
+        .hero-actions {
+
+            flex-direction: column;
+
+            align-items: stretch;
+        }
+
+
+        .hero-primary-btn,
+        .hero-secondary-btn {
+
+            width: 100%;
+        }
+
+
+        .stats-grid {
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+        }
+
+
+        .stat-card {
+
+            padding: 17px;
+        }
+
+
+        .service-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+
+        .section-header {
+
+            margin-top: 45px;
+        }
+
+
+        .section-title {
+
+            font-size: 25px;
+        }
+
+
+        .appointment-banner {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            padding: 30px 25px;
+        }
+
+
+        .appointment-btn {
+
+            width: 100%;
+        }
+
+    }
+
+
+    @media (max-width: 400px) {
+
+        .stats-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<div class="home-page">
+
+
+    <!-- ========================================
+         HERO SECTION
+    ========================================= -->
+
+    <section class="hero-section">
+
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+
+                <span class="hero-badge-dot"></span>
+
+                Trusted Healthcare Platform
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Better Care.
+                <br>
+
+                <span>Better Health.</span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Welcome to HospitalCare — a modern healthcare
+                management platform designed to make appointments,
+                medical services, and patient care simple and
+                accessible.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a
+                    href="{% url 'book_appointment' %}"
+                    class="hero-primary-btn"
+                >
+                    📅 Book an Appointment
+                </a>
+
+
+                <a
+                    href="{% url 'doctors' %}"
+                    class="hero-secondary-btn"
+                >
+                    👨‍⚕️ Meet Our Doctors →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO VISUAL -->
+
+        <div class="hero-visual">
+
+            <div class="medical-orb">
+
+                <div class="medical-orb-inner">
+                    🩺
+                </div>
+
+            </div>
+
+
+            <div class="floating-card top">
+
+                <span class="floating-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Secure & Reliable
+                </span>
+
+            </div>
+
+
+            <div class="floating-card bottom">
+
+                <span class="floating-icon">
+                    ❤️
+                </span>
+
+                <span>
+                    Patient First Care
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         QUICK STATS
+    ========================================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👨‍⚕️
+            </div>
+
+            <div class="stat-number">
+                Expert Doctors
+            </div>
+
+            <div class="stat-label">
+                Dedicated healthcare professionals
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🏥
+            </div>
+
+            <div class="stat-number">
+                Multiple Departments
+            </div>
+
+            <div class="stat-label">
+                Specialized medical services
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📅
+            </div>
+
+            <div class="stat-number">
+                Easy Booking
+            </div>
+
+            <div class="stat-label">
+                Simple appointment scheduling
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🔒
+            </div>
+
+            <div class="stat-number">
+                Secure Access
+            </div>
+
+            <div class="stat-label">
+                Protected patient information
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         SERVICES
+    ========================================= -->
+
+    <div class="section-header">
+
+        <span class="section-label">
+            Healthcare Services
+        </span>
+
+        <h2 class="section-title">
+            Everything you need in one place
+        </h2>
+
+        <p class="section-description">
+            Explore our healthcare services and connect with
+            the right medical professionals for your needs.
+        </p>
+
+    </div>
+
+
+    <div class="service-grid">
+
+
+        <!-- DOCTORS -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                👨‍⚕️
+            </div>
+
+            <h3>
+                Find a Doctor
+            </h3>
+
+            <p>
+                Explore our medical professionals and discover
+                doctors across different specialties.
+            </p>
+
+            <a
+                href="{% url 'doctors' %}"
+                class="service-link"
+            >
+                Explore Doctors →
+            </a>
+
+        </div>
+
+
+        <!-- DEPARTMENTS -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🏥
+            </div>
+
+            <h3>
+                Medical Departments
+            </h3>
+
+            <p>
+                Discover specialized departments and the
+                healthcare services available to patients.
+            </p>
+
+            <a
+                href="{% url 'departments' %}"
+                class="service-link"
+            >
+                Explore Departments →
+            </a>
+
+        </div>
+
+
+        <!-- PATIENTS -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                👤
+            </div>
+
+            <h3>
+                Patient Care
+            </h3>
+
+            <p>
+                Manage your healthcare journey and access your
+                personalized patient information.
+            </p>
+
+            {% if user.is_authenticated %}
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="service-link"
+                >
+                    Open Dashboard →
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="service-link"
+                >
+                    Sign In to Continue →
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         APPOINTMENT CTA
+    ========================================= -->
+
+    <section class="appointment-banner">
+
+        <div class="appointment-content">
+
+            <h2>
+                Ready to take care of your health?
+            </h2>
+
+            <p>
+                Book your appointment with a doctor in just
+                a few simple steps.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'book_appointment' %}"
+            class="appointment-btn"
+        >
+            Book Appointment →
+        </a>
+
+    </section>
+
+
+</div>
+
+{% endblock %}

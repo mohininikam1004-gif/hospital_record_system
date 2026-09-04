@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f7fb;
+}
+
+nav {
+    background: #1565c0;
+    padding: 20px;
+}
+
+nav h2 {
+    color: white;
+    display: inline;
+    margin-right: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.container {
+    width: 85%;
+    margin: 40px auto;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card,
+.cards div {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+input {
+    display: block;
+    width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+button {
+    padding: 10px 25px;
+    background: #1565c0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+}

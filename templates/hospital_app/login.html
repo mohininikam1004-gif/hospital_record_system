@@ -1,0 +1,519 @@
+
+{% extends 'hospital_app/base.html' %}
+
+{% block content %}
+
+<style>
+    .login-page {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 20px;
+        background:
+            radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.10), transparent 30%),
+            radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.10), transparent 30%),
+            #f5f9fc;
+    }
+
+    .login-wrapper {
+        width: 100%;
+        max-width: 980px;
+        min-height: 570px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: #ffffff;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(15, 23, 42, 0.14);
+    }
+
+    /* LEFT SIDE */
+
+    .login-visual {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 55px;
+        color: #ffffff;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(3, 105, 161, 0.96),
+                rgba(13, 148, 136, 0.95)
+            );
+    }
+
+    .login-visual::before {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        top: -120px;
+        right: -100px;
+    }
+
+    .login-visual::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        bottom: -90px;
+        left: -80px;
+    }
+
+    .medical-icon {
+        position: relative;
+        z-index: 2;
+        width: 72px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        font-size: 36px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+    }
+
+    .login-visual h2 {
+        position: relative;
+        z-index: 2;
+        margin: 0 0 18px;
+        font-size: 38px;
+        line-height: 1.15;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .login-visual p {
+        position: relative;
+        z-index: 2;
+        max-width: 390px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.84);
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .trust-list {
+        position: relative;
+        z-index: 2;
+        margin-top: 35px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.92);
+    }
+
+    .trust-check {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        font-size: 13px;
+    }
+
+    /* RIGHT SIDE */
+
+    .login-form-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 55px;
+        background: #ffffff;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .login-header {
+        margin-bottom: 32px;
+    }
+
+    .login-header .eyebrow {
+        display: inline-block;
+        margin-bottom: 10px;
+        color: #0891b2;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .login-header h1 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+    }
+
+    .login-header p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* ERROR */
+
+    .error-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 22px;
+        padding: 13px 15px;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        background: #fff1f2;
+        color: #b91c1c;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .error-icon {
+        flex-shrink: 0;
+        font-size: 15px;
+    }
+
+    /* FORM */
+
+    .form-group {
+        margin-bottom: 21px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        font-size: 16px;
+        pointer-events: none;
+    }
+
+    .form-group input {
+        width: 100%;
+        box-sizing: border-box;
+        height: 52px;
+        padding: 0 16px 0 46px;
+        border: 1px solid #dbe4ec;
+        border-radius: 13px;
+        outline: none;
+        background: #f8fafc;
+        color: #0f172a;
+        font-family: inherit;
+        font-size: 14px;
+        transition: all 0.25s ease;
+    }
+
+    .form-group input::placeholder {
+        color: #a3afbf;
+    }
+
+    .form-group input:hover {
+        border-color: #b8c8d8;
+    }
+
+    .form-group input:focus {
+        border-color: #0891b2;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.10);
+    }
+
+    .login-button {
+        width: 100%;
+        height: 54px;
+        margin-top: 7px;
+        border: none;
+        border-radius: 13px;
+        cursor: pointer;
+        color: #ffffff;
+        background: linear-gradient(135deg, #0284c7, #0d9488);
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 750;
+        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.22);
+        transition: all 0.25s ease;
+    }
+
+    .login-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(2, 132, 199, 0.30);
+    }
+
+    .login-button:active {
+        transform: translateY(0);
+    }
+
+    .security-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin-top: 23px;
+        color: #94a3b8;
+        font-size: 12px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 800px) {
+        .login-wrapper {
+            grid-template-columns: 1fr;
+            max-width: 500px;
+        }
+
+        .login-visual {
+            padding: 40px;
+            min-height: 300px;
+        }
+
+        .login-visual h2 {
+            font-size: 30px;
+        }
+
+        .trust-list {
+            margin-top: 25px;
+        }
+
+        .login-form-section {
+            padding: 40px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .login-page {
+            padding: 25px 15px;
+        }
+
+        .login-wrapper {
+            border-radius: 20px;
+        }
+
+        .login-visual {
+            padding: 30px;
+        }
+
+        .login-form-section {
+            padding: 30px 22px;
+        }
+
+        .login-visual h2 {
+            font-size: 27px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+
+<div class="login-page">
+
+    <div class="login-wrapper">
+
+        <!-- =========================
+             LEFT VISUAL SECTION
+        ========================== -->
+
+        <section class="login-visual">
+
+            <div class="medical-icon">
+                🩺
+            </div>
+
+            <h2>
+                Your Health,<br>
+                Our Priority.
+            </h2>
+
+            <p>
+                Access your personalized healthcare dashboard,
+                manage appointments, and stay connected with
+                your medical care team.
+            </p>
+
+            <div class="trust-list">
+
+                <div class="trust-item">
+                    <span class="trust-check">✓</span>
+                    Secure healthcare access
+                </div>
+
+                <div class="trust-item">
+                    <span class="trust-check">✓</span>
+                    Easy appointment management
+                </div>
+
+                <div class="trust-item">
+                    <span class="trust-check">✓</span>
+                    Personalized patient experience
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LOGIN FORM
+        ========================== -->
+
+        <section class="login-form-section">
+
+            <div class="login-card">
+
+                <div class="login-header">
+
+                    <span class="eyebrow">
+                        Hospital Portal
+                    </span>
+
+                    <h1>
+                        Welcome back
+                    </h1>
+
+                    <p>
+                        Sign in to continue to your healthcare account.
+                    </p>
+
+                </div>
+
+
+                {% if error %}
+
+                    <div class="error-box">
+
+                        <span class="error-icon">⚠</span>
+
+                        <span>
+                            {{ error }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- Username -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Submit -->
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                    >
+                        Sign In →
+                    </button>
+
+                </form>
+
+
+                <div class="security-note">
+                    🔐 Your information is protected and secure
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

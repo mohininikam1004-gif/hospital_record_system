@@ -1,0 +1,38 @@
+{% extends 'hospital_app/base.html' %}
+
+{% block content %}
+
+<h1>Our Doctors</h1>
+
+{% for doctor in doctors %}
+
+<div class="card">
+
+    <h2>
+        Dr. {{ doctor.user.get_full_name }}
+    </h2>
+
+    <p>
+        Specialization:
+        {{ doctor.specialization }}
+    </p>
+
+    <p>
+        Department:
+        {{ doctor.department.name }}
+    </p>
+
+    <p>
+        Phone:
+        {{ doctor.phone }}
+    </p>
+
+</div>
+
+{% empty %}
+
+<p>No doctors available.</p>
+
+{% endfor %}
+
+{% endblock %}

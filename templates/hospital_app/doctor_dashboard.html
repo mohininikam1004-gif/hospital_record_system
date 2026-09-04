@@ -1,0 +1,32 @@
+{% extends 'hospital_app/base.html' %}
+
+{% block content %}
+
+<h1>Doctor Dashboard</h1>
+
+<h2>
+    Welcome Dr. {{ doctor.user.get_full_name }}
+</h2>
+
+<p>
+    Specialization:
+    {{ doctor.specialization }}
+</p>
+
+<p>
+    Department:
+    {{ doctor.department.name }}
+</p>
+
+<p>
+    Phone:
+    {{ doctor.phone }}
+</p>
+
+<h3>Appointments</h3>
+
+<p>
+    Appointment scheduling will be added in V2.
+</p>
+
+{% endblock %}
