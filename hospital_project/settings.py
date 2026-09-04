@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-d@dxh$0ume!#m4r6l23zn%1jq-mi&1fy_jk5_smflipg%42s'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # ============================================================
@@ -183,6 +183,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # ============================================================
 # EMAIL
